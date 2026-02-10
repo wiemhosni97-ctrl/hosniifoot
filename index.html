@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقع البث المباشر | Live Streaming</title>
+    <title>موقع البث المباشر</title>
     <style>
         * {
             margin: 0;
@@ -12,52 +12,24 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
 
         .navbar {
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.8);
             color: white;
-            padding: 15px 20px;
+            padding: 15px;
             margin-bottom: 20px;
             border-radius: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
             max-width: 1400px;
             margin-left: auto;
             margin-right: auto;
-        }
-
-        .navbar h1 {
-            font-size: 1.5em;
-        }
-
-        .status-indicator {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
-            padding: 10px 15px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 8px;
-        }
-
-        .live-dot {
-            width: 12px;
-            height: 12px;
-            background: #e74c3c;
-            border-radius: 50%;
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
         }
 
         .container {
@@ -82,7 +54,6 @@
         }
 
         .video-container {
-            position: relative;
             width: 100%;
             background: #000;
             border-radius: 10px;
@@ -91,10 +62,11 @@
             margin-bottom: 20px;
         }
 
-        video {
+        video, canvas {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
 
         .video-placeholder {
@@ -103,9 +75,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
             color: white;
             font-size: 1.5em;
+            background: #000;
         }
 
         .controls-section {
@@ -142,13 +114,12 @@
 
         .btn {
             padding: 12px;
-            font-size: 1em;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            transition: all 0.3s;
             color: white;
+            transition: all 0.3s;
         }
 
         .btn-primary {
@@ -158,23 +129,14 @@
 
         .btn-primary:hover {
             background: #764ba2;
-            transform: translateY(-2px);
         }
 
         .btn-danger {
             background: #e74c3c;
         }
 
-        .btn-danger:hover {
-            background: #c0392b;
-        }
-
         .btn-toggle {
             background: #f39c12;
-        }
-
-        .btn-toggle:hover {
-            background: #e67e22;
         }
 
         .info-card {
@@ -191,7 +153,7 @@
         }
 
         .info-value {
-            font-size: 1.3em;
+            font-size: 1.5em;
             font-weight: bold;
             color: #333;
         }
@@ -228,38 +190,18 @@
             background: white;
             border-left: 4px solid #667eea;
             font-size: 0.95em;
-            animation: slideIn 0.3s ease-out;
         }
 
         .message.system {
-            background: linear-gradient(135deg, #f39c12 0%, #f1c40f 100%);
-            border-left-color: #e67e22;
-            font-style: italic;
+            background: #fff3cd;
+            border-left-color: #ffc107;
             color: #333;
-            font-weight: 500;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
         }
 
         .message-sender {
             font-weight: bold;
             color: #667eea;
             font-size: 0.9em;
-        }
-
-        .message-text {
-            margin-top: 5px;
-            word-wrap: break-word;
-            line-height: 1.4;
         }
 
         .chat-input-group {
@@ -272,7 +214,6 @@
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            font-size: 0.9em;
         }
 
         .chat-input-group button {
@@ -282,18 +223,12 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
-        }
-
-        .chat-input-group button:hover {
-            background: #764ba2;
         }
 
         .status-badge {
             display: inline-block;
             padding: 5px 10px;
             border-radius: 20px;
-            font-size: 0.9em;
             font-weight: bold;
         }
 
@@ -307,12 +242,12 @@
             color: white;
         }
 
-        .tab-buttons {
+        .tabs {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
             border-bottom: 2px solid #ddd;
-            padding-bottom: 15px;
+            padding-bottom: 10px;
         }
 
         .tab-btn {
@@ -339,39 +274,6 @@
             display: block;
         }
 
-        .home-section {
-            text-align: center;
-        }
-
-        .home-section h1 {
-            color: #667eea;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .feature {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .feature-icon {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .feature h3 {
-            color: #667eea;
-        }
-
         @media (max-width: 1024px) {
             .container {
                 grid-template-columns: 1fr;
@@ -380,72 +282,31 @@
             .button-group {
                 grid-template-columns: 1fr;
             }
-
-            .btn-primary {
-                grid-column: 1;
-            }
-
-            .tab-buttons {
-                justify-content: space-around;
-            }
         }
     </style>
 </head>
 <body>
     <div class="navbar">
         <h1>📡 موقع البث المباشر</h1>
-        <div class="status-indicator" id="broadcastStatus">
-            <span>لا يوجد بث نشط</span>
+        <div id="broadcastStatus" style="display: flex; align-items: center; gap: 10px;">
+            <span id="statusText">لا يوجد بث</span>
+            <span class="status-badge offline" id="statusBadge">معطّل</span>
         </div>
     </div>
 
     <div class="container">
         <div class="main-section">
-            <div class="tab-buttons">
-                <button class="tab-btn active" onclick="switchTab('home')">🏠 الرئيسية</button>
-                <button class="tab-btn" onclick="switchTab('broadcast')">🎬 البث</button>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('broadcast')">🎬 البث</button>
                 <button class="tab-btn" onclick="switchTab('watch')">👁️ المشاهدة</button>
             </div>
 
-            <!-- الرئيسية -->
-            <div id="home" class="tab-content active home-section">
-                <h1>مرحباً بك في البث المباشر</h1>
-                <p style="font-size: 1.2em; color: #666; margin-bottom: 30px;">منصة بث مباشر احترافية وسهلة الاستخدام</p>
-                
-                <div class="features">
-                    <div class="feature">
-                        <div class="feature-icon">🎥</div>
-                        <h3>بث مباشر</h3>
-                        <p>ابدأ البث من الكاميرا مباشرة</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">👥</div>
-                        <h3>مشاهدين غير محدود</h3>
-                        <p>عدد غير محدود من المشاهدين</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">💬</div>
-                        <h3>دردشة فورية</h3>
-                        <p>تفاعل مع المشاهدين</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">📊</div>
-                        <h3>معلومات فورية</h3>
-                        <p>إحصائيات البث الحية</p>
-                    </div>
-                </div>
-
-                <p style="color: #666; margin-top: 30px;">اختر من الأعلى: البث أو المشاهدة</p>
-            </div>
-
-            <!-- البث -->
-            <div id="broadcast" class="tab-content">
+            <!-- التبويب: البث -->
+            <div id="broadcast" class="tab-content active">
                 <h2 style="color: #667eea; margin-bottom: 20px;">🎬 ابدأ البث المباشر</h2>
                 
-                <div class="video-container" id="videoContainer">
-                    <div class="video-placeholder">
-                        <div>🎬 في انتظار البث...</div>
-                    </div>
+                <div class="video-container" id="broadcasterVideo">
+                    <div class="video-placeholder">🎬 معاينة الكاميرا هنا</div>
                 </div>
 
                 <div class="control-group">
@@ -459,20 +320,14 @@
                     <button class="btn btn-toggle" id="toggleAudioBtn" onclick="toggleAudio()" style="display: none;">🎤 إيقاف الصوت</button>
                     <button class="btn btn-danger" id="stopBtn" onclick="stopBroadcast()" style="display: none;">⏹️ إيقاف البث</button>
                 </div>
-
-                <div style="background: #f0f4ff; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #667eea;">
-                    <p style="color: #333; font-size: 0.9em;"><strong>💡 ملاحظة:</strong> شارك رابط هذا الموقع مع من تريد أن يشاهدك</p>
-                </div>
             </div>
 
-            <!-- المشاهدة -->
+            <!-- التبويب: المشاهدة -->
             <div id="watch" class="tab-content">
-                <h2 style="color: #667eea; margin-bottom: 20px;">👁️ اشترك في البث</h2>
+                <h2 style="color: #667eea; margin-bottom: 20px;">👁️ شاهد البث المباشر</h2>
                 
-                <div class="video-container" id="viewerVideoContainer">
-                    <div class="video-placeholder">
-                        <div>🎬 في انتظار البث...</div>
-                    </div>
+                <div class="video-container" id="viewerVideo">
+                    <div class="video-placeholder">🎬 البث سيظهر هنا</div>
                 </div>
 
                 <div class="control-group">
@@ -481,20 +336,20 @@
                 </div>
 
                 <button class="btn btn-primary" onclick="joinBroadcast()">🔗 انضم للبث</button>
-                <button class="btn btn-danger" id="leaveBtn" onclick="leaveBroadcast()" style="display: none; margin-top: 10px; grid-column: 1 / -1;">❌ غادر البث</button>
+                <button class="btn btn-danger" id="leaveBtn" onclick="leaveBroadcast()" style="display: none; margin-top: 10px;">❌ غادر</button>
             </div>
         </div>
 
         <div class="sidebar">
             <div class="info-card">
                 <h3>📊 معلومات البث</h3>
-                <div style="margin-bottom: 10px;">
-                    <small>الحالة:</small>
-                    <div class="info-value"><span class="status-badge offline" id="statusBadge">معطّل</span></div>
-                </div>
                 <div>
                     <small>عدد المشاهدين:</small>
                     <div class="info-value" id="viewersCount">0</div>
+                </div>
+                <div style="margin-top: 10px;">
+                    <small>الحالة:</small>
+                    <div class="info-value" id="broadcastState">معطّل 🔴</div>
                 </div>
             </div>
 
@@ -509,29 +364,71 @@
         </div>
     </div>
 
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script>
-        // ============ متغيرات عامة ============
+        let socket;
         let localStream;
         let isBroadcasting = false;
-        let isViewing = false;
-        let broadcasterId = null;
-        let viewers = [];
-        let chatHistory = [];
+        let isJoined = false;
+        let canvasStream;
 
-        // ============ تهيئة التطبيق ============
-        window.addEventListener('DOMContentLoaded', () => {
-            loadChatHistory();
+        // الاتصال بالسيرفر
+        window.addEventListener('load', () => {
+            // محاولة الاتصال بالسيرفر، أو العمل بدونه
+            try {
+                socket = io();
+            } catch (e) {
+                console.log('لم يتم الاتصال بالسيرفر. سيتم استخدام الوضع المحلي');
+                socket = null;
+            }
+
+            if (socket) {
+                socket.on('connect', () => {
+                    console.log('متصل:', socket.id);
+                });
+
+                socket.on('receive-video', (frameData) => {
+                    displayBroadcast(frameData);
+                });
+
+                socket.on('chat-message', (data) => {
+                    addMessage(data.sender, data.text, false);
+                });
+
+                socket.on('broadcast-started', (name) => {
+                    updateStatus(true, name);
+                    addMessage('النظام', `🎬 ${name} بدأ البث!`, true);
+                });
+
+                socket.on('broadcast-ended', () => {
+                    updateStatus(false);
+                    addMessage('النظام', '⏹️ البث انتهى', true);
+                    document.getElementById('viewerVideo').innerHTML = '<div class="video-placeholder">🎬 في انتظار البث الجديد</div>';
+                });
+
+                socket.on('viewers-count', (count) => {
+                    document.getElementById('viewersCount').textContent = count;
+                });
+
+                socket.on('viewer-joined', (name) => {
+                    addMessage('النظام', `✅ ${name} انضم للبث`, true);
+                });
+
+                socket.on('viewer-left', (name) => {
+                    addMessage('النظام', `👋 ${name} غادر البث`, true);
+                });
+            }
         });
 
-        // ============ التبويبات ============
+        // تبديل التبويبات
         function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
             event.target.classList.add('active');
         }
 
-        // ============ البث ============
+        // بدء البث
         async function startBroadcast() {
             try {
                 localStream = await navigator.mediaDevices.getUserMedia({
@@ -539,239 +436,214 @@
                     audio: true
                 });
 
-                const videoContainer = document.getElementById('videoContainer');
+                const videoContainer = document.getElementById('broadcasterVideo');
                 videoContainer.innerHTML = '';
                 const video = document.createElement('video');
                 video.autoplay = true;
                 video.muted = true;
-                video.playsinline = true;
                 video.style.transform = 'scaleX(-1)';
                 video.srcObject = localStream;
                 videoContainer.appendChild(video);
 
+                isBroadcasting = true;
+                const name = document.getElementById('broadcasterName').value || 'المُبث';
+
+                document.querySelector('#broadcast .btn-primary').style.display = 'none';
                 document.getElementById('toggleVideoBtn').style.display = 'inline-block';
                 document.getElementById('toggleAudioBtn').style.display = 'inline-block';
                 document.getElementById('stopBtn').style.display = 'inline-block';
-                document.querySelector('#broadcast .btn-primary').style.display = 'none';
 
-                isBroadcasting = true;
-                broadcasterId = 'broadcaster_' + Date.now();
+                if (socket) {
+                    socket.emit('start-broadcast', { name: name });
+                }
 
-                updateBroadcastStatus(true, document.getElementById('broadcasterName').value);
-                addChatMessage('النظام', '🎬 بدأ البث المباشر الآن!', true);
+                updateStatus(true, name);
+                addMessage('النظام', `🎬 ${name} بدأ البث!`, true);
+
+                // إرسال إطارات البث
+                sendVideoFrames();
 
             } catch (error) {
-                console.error('خطأ:', error);
                 alert('خطأ: تأكد من السماح للموقع بالوصول للكاميرا');
             }
         }
 
-        function stopBroadcast() {
-            if (localStream) {
-                localStream.getTracks().forEach(track => track.stop());
-            }
-
-            isBroadcasting = false;
-            document.getElementById('videoContainer').innerHTML = '<div class="video-placeholder"><div>🎬 في انتظار البث...</div></div>';
-            document.getElementById('toggleVideoBtn').style.display = 'none';
-            document.getElementById('toggleAudioBtn').style.display = 'none';
-            document.getElementById('stopBtn').style.display = 'none';
-            document.querySelector('#broadcast .btn-primary').style.display = 'block';
-
-            updateBroadcastStatus(false);
-            addChatMessage('النظام', '⏹️ توقف البث', true);
-        }
-
-        function toggleVideo() {
-            const tracks = localStream.getVideoTracks();
-            if (tracks.length > 0) {
-                tracks[0].enabled = !tracks[0].enabled;
-                document.getElementById('toggleVideoBtn').textContent = tracks[0].enabled ? '📹 إيقاف الفيديو' : '📹 تشغيل الفيديو';
-            }
-        }
-
-        function toggleAudio() {
-            const tracks = localStream.getAudioTracks();
-            if (tracks.length > 0) {
-                tracks[0].enabled = !tracks[0].enabled;
-                document.getElementById('toggleAudioBtn').textContent = tracks[0].enabled ? '🎤 إيقاف الصوت' : '🎤 تشغيل الصوت';
-            }
-        }
-
-        // ============ المشاهدة ============
-        function joinBroadcast() {
-            isViewing = true;
-            const viewerName = document.getElementById('viewerName').value || 'مشاهد';
-            viewers.push(viewerName);
-            
-            document.querySelector('#watch .btn-primary').style.display = 'none';
-            document.getElementById('leaveBtn').style.display = 'block';
-
-            updateViewersCount();
-            addChatMessage('النظام', `✅ ${viewerName} انضم للبث`, true);
-
-            simulateBroadcast();
-        }
-
-        function leaveBroadcast() {
-            isViewing = false;
-            const viewerName = document.getElementById('viewerName').value;
-            viewers = viewers.filter(v => v !== viewerName);
-
-            document.querySelector('#watch .btn-primary').style.display = 'block';
-            document.getElementById('leaveBtn').style.display = 'none';
-            document.getElementById('viewerVideoContainer').innerHTML = '<div class="video-placeholder"><div>🎬 في انتظار البث...</div></div>';
-
-            updateViewersCount();
-            addChatMessage('النظام', `👋 ${viewerName} غادر البث`, true);
-        }
-
-        function simulateBroadcast() {
-            if (!isBroadcasting) {
-                document.getElementById('viewerVideoContainer').innerHTML = '<div class="video-placeholder"><div style="padding: 20px; text-align: center;">لا يوجد بث نشط الآن<br>🔴 في انتظار بث جديد</div></div>';
-                return;
-            }
+        // إرسال إطارات البث
+        function sendVideoFrames() {
+            const videoElement = document.querySelector('#broadcasterVideo video');
+            if (!videoElement) return;
 
             const canvas = document.createElement('canvas');
             canvas.width = 1280;
             canvas.height = 720;
             const ctx = canvas.getContext('2d');
 
-            ctx.fillStyle = '#667eea';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'white';
-            ctx.font = 'bold 48px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('🎥 البث المباشر', canvas.width / 2, canvas.height / 2 - 50);
-            ctx.font = '24px Arial';
-            ctx.fillText(`عدد المشاهدين: ${viewers.length}`, canvas.width / 2, canvas.height / 2 + 50);
-
-            const stream = canvas.captureStream(30);
-            const videoElement = document.getElementById('viewerVideoContainer').querySelector('video') || document.createElement('video');
-            if (!document.getElementById('viewerVideoContainer').querySelector('video')) {
-                videoElement.autoplay = true;
-                videoElement.playsinline = true;
-                document.getElementById('viewerVideoContainer').innerHTML = '';
-                document.getElementById('viewerVideoContainer').appendChild(videoElement);
-            }
-            videoElement.srcObject = stream;
+            setInterval(() => {
+                if (isBroadcasting && videoElement) {
+                    try {
+                        ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+                        canvas.toBlob((blob) => {
+                            const reader = new FileReader();
+                            reader.readAsDataURL(blob);
+                            reader.onload = () => {
+                                if (socket) {
+                                    socket.emit('send-video', { frame: reader.result });
+                                }
+                                // إرسال للمشاهدين المحليين أيضاً
+                                updateLocalViewers(reader.result);
+                            };
+                        }, 'image/jpeg', 0.7);
+                    } catch (e) {
+                        console.error('خطأ:', e);
+                    }
+                }
+            }, 100);
         }
 
-        // ============ الدردشة ============
+        // تحديث المشاهدين المحليين
+        function updateLocalViewers(frameData) {
+            if (isJoined) {
+                displayBroadcast({ frame: frameData });
+            }
+        }
+
+        // إيقاف البث
+        function stopBroadcast() {
+            if (localStream) {
+                localStream.getTracks().forEach(track => track.stop());
+            }
+            isBroadcasting = false;
+            if (socket) {
+                socket.emit('stop-broadcast');
+            }
+
+            document.getElementById('broadcasterVideo').innerHTML = '<div class="video-placeholder">🎬 معاينة الكاميرا هنا</div>';
+            document.querySelector('#broadcast .btn-primary').style.display = 'block';
+            document.getElementById('toggleVideoBtn').style.display = 'none';
+            document.getElementById('toggleAudioBtn').style.display = 'none';
+            document.getElementById('stopBtn').style.display = 'none';
+
+            updateStatus(false);
+            addMessage('النظام', '⏹️ البث انتهى', true);
+        }
+
+        // تبديل الفيديو
+        function toggleVideo() {
+            const tracks = localStream.getVideoTracks();
+            if (tracks[0]) tracks[0].enabled = !tracks[0].enabled;
+            document.getElementById('toggleVideoBtn').textContent = tracks[0].enabled ? '📹 إيقاف الفيديو' : '📹 تشغيل الفيديو';
+        }
+
+        // تبديل الصوت
+        function toggleAudio() {
+            const tracks = localStream.getAudioTracks();
+            if (tracks[0]) tracks[0].enabled = !tracks[0].enabled;
+            document.getElementById('toggleAudioBtn').textContent = tracks[0].enabled ? '🎤 إيقاف الصوت' : '🎤 تشغيل الصوت';
+        }
+
+        // الانضمام للبث
+        function joinBroadcast() {
+            const name = document.getElementById('viewerName').value || 'مشاهد';
+            isJoined = true;
+
+            if (socket) {
+                socket.emit('join-broadcast', { name: name });
+            }
+
+            document.querySelector('#watch .btn-primary').style.display = 'none';
+            document.getElementById('leaveBtn').style.display = 'block';
+
+            addMessage('النظام', `✅ ${name} انضم للبث`, true);
+        }
+
+        // مغادرة البث
+        function leaveBroadcast() {
+            isJoined = false;
+            if (socket) {
+                socket.emit('leave-broadcast');
+            }
+
+            document.querySelector('#watch .btn-primary').style.display = 'block';
+            document.getElementById('leaveBtn').style.display = 'none';
+            document.getElementById('viewerVideo').innerHTML = '<div class="video-placeholder">🎬 في انتظار البث</div>';
+
+            addMessage('النظام', '👋 غادرت البث', true);
+        }
+
+        // عرض البث (استقبال الإطارات)
+        function displayBroadcast(data) {
+            const videoContainer = document.getElementById('viewerVideo');
+            if (!videoContainer.querySelector('canvas')) {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1280;
+                canvas.height = 720;
+                canvas.style.width = '100%';
+                canvas.style.height = '100%';
+                videoContainer.innerHTML = '';
+                videoContainer.appendChild(canvas);
+            }
+
+            const canvas = videoContainer.querySelector('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            img.src = data.frame;
+            img.onload = () => {
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            };
+        }
+
+        // إرسال رسالة
         function sendMessage() {
             const input = document.getElementById('chatInput');
-            const message = input.value.trim();
+            const text = input.value.trim();
+            if (!text) return;
 
-            if (message) {
-                const sender = isBroadcasting ? 
-                    (document.getElementById('broadcasterName').value || 'المُبث') :
-                    (document.getElementById('viewerName').value || 'مشاهد');
-                
-                const messageObj = {
-                    sender: sender,
-                    text: message,
-                    time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }),
-                    isSystem: false,
-                    isBroadcaster: isBroadcasting
-                };
+            const sender = isBroadcasting ? 
+                document.getElementById('broadcasterName').value :
+                document.getElementById('viewerName').value;
 
-                addChatMessage(messageObj.sender, messageObj.text, false, false, messageObj.time, messageObj.isBroadcaster);
-                chatHistory.push(messageObj);
-                saveChatHistory();
-                input.value = '';
-                input.focus();
+            if (socket) {
+                socket.emit('send-message', { sender, text });
             }
+
+            addMessage(sender + (isBroadcasting ? ' 🎙️' : ''), text, false);
+            input.value = '';
         }
 
-        function addChatMessage(sender, text, isSystem = false, isOwn = false, time = '', isBroadcaster = false) {
+        // إضافة رسالة في الدردشة
+        function addMessage(sender, text, isSystem) {
             const chatMessages = document.getElementById('chatMessages');
             const messageEl = document.createElement('div');
             messageEl.className = isSystem ? 'message system' : 'message';
 
-            if (!time) {
-                time = new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
-            }
-
             if (isSystem) {
-                messageEl.innerHTML = `
-                    <div style="display: flex; justify-content: space-between;">
-                        <span>${text}</span>
-                        <span style="font-size: 0.75em; opacity: 0.7;">${time}</span>
-                    </div>
-                `;
+                messageEl.innerHTML = `<span>${text}</span>`;
             } else {
-                const badge = isBroadcaster ? ' 🔴 مُبث' : '';
-                const icon = isBroadcaster ? '🎙️' : '👤';
-                messageEl.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                        <span class="message-sender">${icon} ${sender}${badge}</span>
-                        <span style="font-size: 0.75em; opacity: 0.7;">${time}</span>
-                    </div>
-                    <div class="message-text">${escapeHtml(text)}</div>
-                `;
+                messageEl.innerHTML = `<div class="message-sender">${sender}</div><div>${text}</div>`;
             }
 
             chatMessages.appendChild(messageEl);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            if (chatMessages.children.length > 150) {
+            if (chatMessages.children.length > 100) {
                 chatMessages.removeChild(chatMessages.firstChild);
             }
         }
 
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // ============ حفظ واستعادة الدردشة ============
-        function saveChatHistory() {
-            localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
-        }
-
-        function loadChatHistory() {
-            const saved = localStorage.getItem('chatHistory');
-            if (saved) {
-                chatHistory = JSON.parse(saved);
-                chatHistory.forEach(msg => {
-                    if (!msg.isSystem) {
-                        addChatMessage(msg.sender, msg.text, false, false, msg.time, msg.isBroadcaster);
-                    }
-                });
-            }
-        }
-
-        // ============ معلومات البث ============
-        function updateBroadcastStatus(isActive, broadcasterName = '') {
-            const statusIndicator = document.getElementById('broadcastStatus');
-            const statusBadge = document.getElementById('statusBadge');
-
+        // تحديث الحالة
+        function updateStatus(isActive, name) {
             if (isActive) {
-                statusIndicator.innerHTML = `
-                    <div class="live-dot"></div>
-                    <span>🔴 بث مباشر: ${broadcasterName}</span>
-                `;
-                statusBadge.className = 'status-badge online';
-                statusBadge.textContent = 'مباشر 🔴';
+                document.getElementById('statusText').textContent = `🔴 بث: ${name}`;
+                document.getElementById('statusBadge').textContent = 'مباشر 🔴';
+                document.getElementById('statusBadge').className = 'status-badge online';
+                document.getElementById('broadcastState').textContent = 'مباشر 🔴';
             } else {
-                statusIndicator.innerHTML = '<span>لا يوجد بث نشط</span>';
-                statusBadge.className = 'status-badge offline';
-                statusBadge.textContent = 'معطّل';
+                document.getElementById('statusText').textContent = 'لا يوجد بث';
+                document.getElementById('statusBadge').textContent = 'معطّل';
+                document.getElementById('statusBadge').className = 'status-badge offline';
+                document.getElementById('broadcastState').textContent = 'معطّل ⏹️';
             }
         }
-
-        function updateViewersCount() {
-            document.getElementById('viewersCount').textContent = viewers.length;
-        }
-
-        // التنظيف عند الخروج
-        window.addEventListener('beforeunload', () => {
-            if (localStream) {
-                localStream.getTracks().forEach(track => track.stop());
-            }
-        });
     </script>
 </body>
 </html>
